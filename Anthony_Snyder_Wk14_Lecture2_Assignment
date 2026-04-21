@@ -1,0 +1,128 @@
+#Unit 1 Beginner Exerecise
+rgb_color = (255, 128, 0)
+print(f"Red channel: {rgb_color[0]}")
+print(f"Green channel: {rgb_color[1]}")
+print(f"Blue channel: {rgb_color[2]}")
+print(f"Last element: {rgb_color[-1]}")
+palette = []
+palette.append(rgb_color)
+print("Palette: ", palette)
+
+#Unit 1 Intermediate Exercise
+student1 = ("Alice", "A", 17)
+student2 = ("Bob", "A-", 15)
+student3 = ("Charlie", "B-", 16)
+classroom = [student1, student2, student3]
+print("The second student's name is: ", classroom[1][0])
+name, grade, age = classroom[0]
+print(f"{name} is {age} years old and has a grade of {grade}.")
+
+#Unit 1 Advanced Exercise
+student_record = ("Alice", [85, 90, 88], "B")
+original_record = (student_record[0], student_record[1][:], student_record[2])
+student_record[1].append(95)
+exam_scores = student_record[1]
+average = sum(exam_scores) / len(exam_scores)
+if average >= 90:
+    final_grade = "A"
+elif average >= 80:
+    final_grade = "B"
+elif average >= 70:
+    final_grade = "C"
+elif average >= 60:
+    final_grade = "D"
+else:
+    final_grade = "F"
+updated_record = (student_record[0], exam_scores, final_grade)
+print("Original record: ", original_record)
+print("Updated record: ", updated_record)
+
+#Unit 2 Beginner Exercise
+grades = [85, 82, 90]
+date = (4, 21, 2026)
+def boost_grades(grade_list):
+    for i in range(len(grade_list)):
+        grade_list[i] += 5
+    return grade_list
+boosted = boost_grades(grades)
+print("Boosted grades: ", boosted)
+#Lists are mutable, so since we need to change the grade values, we need to use a
+#list, but we use a tuple for the date since it does not need to be changed
+#because tuples are immutable.
+
+#Unit 2 Intermediate Exercise
+def find_range(*args):
+    return (min(args), max(args))
+result1 = find_range(10, 25, 3)
+print("Range (3 numbers): ", result1)
+result2 = find_range(5, 12, 7, 30, 18, 2, 25)
+print("Range (7 numbers): ", result2)
+test_scores = [78, 92, 85, 88, 91]
+result3 = find_range(*test_scores)
+print("Range (unpacked list): ", result3)
+
+#Unit 2 Advanced Exercise
+def calculate_statistics(*args):
+    count = len(args)
+    total = sum(args)
+    average = (f"{total / count if count > 0 else 0:.2f}")
+    return (count, total, average)
+def update_student_records(students, bonus):
+    updated = []
+    for name, grade in students:
+        new_grade = grade + bonus
+        updated.append((name, new_grade))
+    return updated
+students = [("Alice", 78), ("Bob", 85), ("Charlie", 90)]
+updated_students = update_student_records(students, 5)
+updated_grades = [grade for name, grade in updated_students]
+stats = calculate_statistics(*updated_grades)
+print("Original students: ", students)
+print("Updated students: ", updated_students)
+print("Statistics (count, sum, average): ", stats)
+
+#Unit 3 Beginner Exercise
+grid = [
+    [1, 2, 3], 
+    [4, 5, 6], 
+    [7, 8, 9]
+]
+print("Full grid: ", grid)
+print("Center number: ", grid[1][1])
+print("Grid rows: ")
+for row in grid:
+    for num in row:
+        print(num, end=" ")
+    print()
+
+#Unit 3 Intermediate Exercise
+scores = [45, 78, 92, 61, 88, 73, 55, 90, 82]
+passing_grades = [score for score in scores if score >= 60]
+letter_grades = [
+    "A" if score >= 90 else
+    "B" if score >= 80 else
+    "C" if score >= 70 else
+    "D"
+    for score in passing_grades
+]
+print("Passing grades: ", passing_grades)
+print("Letter grades: ", letter_grades)
+
+#Unit 3 Advanced Exercise
+table = [[i * j for j in range(1,5)] for i in range(1,5)]
+print("Multiplication Table: ")
+for row in table:
+    for value in row:
+        print(f"{value:3}", end=" ")
+    print()
+def sum_diagonal(matrix):
+    sum = 0
+    for i in range(len(matrix)):
+        sum += matrix[i][i]
+    return sum
+diag_sum = sum_diagonal(table)
+print("\nDiagonal Sum: ", diag_sum)
+even_numbers = (num for row in table for num in row if num % 2 == 0)
+print("\nFirst 5 even numbers: ")
+for _, value in zip(range(5), even_numbers):
+    print(value)
