@@ -1,0 +1,145 @@
+"""
+Student Grade Tracker
+CS 1300 - Lecture 5 Mini-Project
+
+A modular, well-tested program that collects exam scores, 
+calculates a letter grade and academic standing, and
+displays a formatted report.
+"""
+def get_student_name():
+    return input("Student name: ")
+    pass
+def get_exam_scores():
+    scores = []
+    for i in range(3):
+        s = get_validated_input(f"Exam {i+1} score: ", 0, 100)
+        scores.append(s)
+    return scores
+    pass
+def calculate_average(scores):
+    """
+    Calculates the average of the exam scores.
+
+    Args:
+        scores (list of int or float): A list containing exam scores.
+
+    Returns:
+        float: The average of the exam scores.
+    """
+    return sum(scores) / len(scores)
+    pass
+def determine_letter_grade(avg):
+    """
+    Determines the letter grade based on the average score.
+
+    Args:
+        avg (float): The average score.
+
+    Returns:
+        str: The letter grade corresponding to the average.
+            'A' for 90 and above,
+            'B' for 80-89,
+            'C' for 70-79,
+            'D' for 60-69,
+            'F' for below 60.
+    """
+    if avg >= 90: 
+        return "A"
+    elif avg >= 80: 
+        return "B"
+    elif avg >= 70: 
+        return "C"
+    elif avg >= 60: 
+        return "D"
+    else: 
+        return "F"
+    pass
+def determine_academic_standing(avg):
+    if avg >= 90: 
+        return "Dean's List"
+    elif avg >= 70: 
+        return "Good Standing"
+    elif avg >= 60: 
+        return "Academic Probation"
+    else: 
+        return "Academic Warning"
+    pass
+def display_report(name, scores, avg, grade, standing):
+    format_report_border()
+    print("STUDENT GRADE REPORT")
+    format_report_border()
+    print(f"Student: {name}")
+    print(f"Exam 1: {scores[0]}")
+    print(f"Exam 2: {scores[1]}")
+    print(f"Exam 3: {scores[2]}")
+    format_section_divider()
+    print(f"Average: {avg:.2f}")
+    print(f"Grade: {grade}")
+    print(f"Standing: {standing}")
+    format_report_border()
+    pass
+def is_valid_score(score):
+    return 0 <= score <= 100
+def get_valid_int(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Please enter a valid integer.")
+def format_report_border():
+    print('=' * 30)
+def format_section_divider():
+    print('-' * 30)
+
+def get_validated_input(prompt, min_val=0, max_val=100):
+    while True:
+        try:
+            value = int(input(prompt))
+            if min_val <= value <= 100:
+                return value
+            else:
+                print(f"Invalid! Enter a number between {min_val} and {max_val}.")
+        except ValueError:
+            print("Invalid! Please enter an integer.")
+def test_grade_tracker():
+    print("Running tests...\n")
+    scores_normal = [80, 90, 100]
+    result = calculate_average(scores_normal)
+    assert result == 90.0, "Failed: Normal average calculation"
+    print("PASS: calculate_average (normal case)")
+    scores_same = [70, 70, 70]
+    result = calculate_average(scores_same)
+    assert result == 70.0, "Failed: Same values average"
+    print("PASS: calculate_average (edge case - same values)")
+    scores_low = [0, 0, 0]
+    result = calculate_average(scores_low)
+    assert result == 0.0, "Failed: Low boundary average"
+    print("PASS: calculate_average (boundary case - low)")
+    assert determine_letter_grade(85) == "B", "Failed: Normal grade"
+    print("PASS: determine_letter_grade (normal case)")
+    assert determine_letter_grade(90) == "A", "Failed: Boundary A"
+    assert determine_letter_grade(80) == "B", "Failed: Boundary B"
+    assert determine_letter_grade(70) == "C", "Failed: Boundary C"
+    assert determine_letter_grade(60) == "D", "Failed: Boundary D"
+    assert determine_letter_grade(59.9) == "F", "Failed: Boundary F"
+    print("PASS: determine_letter_grade (boundary cases)")
+    assert determine_letter_grade(100) == "A", "Failed: Perfect score"
+    print("PASS: determine_letter_grade (edge case - perfect score)")
+    assert determine_academic_standing(75) == "Good Standing", "Failed: Normal standing"
+    assert determine_academic_standing(90) == "Dean's List", "Failed: Boundary Dean's List"
+    assert determine_academic_standing(70) == "Good Standing", "Failed: Boundary Good Standing"
+    assert determine_academic_standing(60) == "Academic Probation", "Failed: Boundary Probation"
+    assert determine_academic_standing(59.9) == "Academic Warning", "Failed: Boundary Warning"
+    print("PASS: determine_academic_standing (boundary cases)")
+    print("\n All tests passed!")
+def main():
+    name = get_student_name()
+    scores = get_exam_scores()
+    if scores is None:
+        return
+    avg = calculate_average(scores)
+    grade = determine_letter_grade(avg)
+    standing = determine_academic_standing(avg)
+    display_report(name, scores, avg, grade, standing)
+main()
+#test_grade_tracker()
