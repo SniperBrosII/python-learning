@@ -1,0 +1,96 @@
+#Problem 1 - FizzBuzz
+for i in range(1, 31):
+    if i % 3 == 0 and i % 5 == 0:
+        print("FizzBuzz")
+    elif i % 3 == 0:
+        print("Fizz")
+    elif i % 5 == 0:
+        print("Buzz")
+    else:
+        print(i)
+
+#Problem 2 - Times Table Pattern
+n = 6
+for i in range(1, n + 1):
+    for j in range(1, n + 1):
+        print(f"{i * j:4}", end="")
+    print()
+
+#Problem 3 - Remove Duplicates Preserving Order
+def unique_preserve_order(lst):
+    result = []
+    seen = []
+    for item in lst:
+        if item not in seen:
+            seen.append(item)
+            result.append(item)
+    return result
+print(unique_preserve_order([1, 2, 2, 3, 1, 4]))
+
+#Problem 4 - Fibonacci Sequence Generator
+def fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    sequence = [0, 1]
+    for _ in range(2, n):
+        sequence.append(sequence[-1] + sequence[-2])
+    return sequence
+print(fibonacci(1))
+print(fibonacci(2))
+print(fibonacci(7))
+print(fibonacci(10))
+print(fibonacci(0))
+
+#Problem 5 - Mini Banking System
+def banking_app():
+    balance = 1000.0
+    history = []
+    while True:
+        print("\n--- Banking Menu ---")
+        print("1. Check balance")
+        print("2. Deposit")
+        print("3. Withdraw")
+        print("4. Show transaction history")
+        print("5. Quit")
+        choice = str(input("Choose an option (1-5): "))
+        if choice == "1":
+            print(f"Current balance: ${balance:.2f}")
+        elif choice == "2":
+            try:
+                amount = float(input("Enter deposit amount: "))
+                if amount > 0:
+                    balance += amount
+                    history.append(f"Deposited ${amount:.2f}")
+                    print("Deposit successful.")
+                else:
+                    print("Amount must be positive.")
+            except ValueError:
+                print("Invalid input.")
+        elif choice == "3":
+            try:
+                withdraw = float(input("Enter withdrawl amount: "))
+                if withdraw > balance:
+                    print("Insufficient funds.")
+                elif withdraw > 0:
+                    balance -= withdraw
+                    history.append(f"Withdrew ${withdraw:.2f}")
+                    print("Withdrawl successful.")
+                else:
+                    print("Amount must be positive.")
+            except ValueError:
+                print("Invalid input.")
+        elif choice == "4":
+            print("\n--- Transaction History ---")
+            if not history:
+                print("No transactions yet.")
+            else:
+                for item in history:
+                    print(item)
+        elif choice == "5":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select 1-5.")
+banking_app()
